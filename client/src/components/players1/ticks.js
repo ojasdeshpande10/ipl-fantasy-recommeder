@@ -8,7 +8,8 @@ class Ticks extends React.Component {
         super(props);
         this.state ={
           players:[],
-          fielders:[]
+          fielders:[],
+          bowlers:[]
         }
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,6 +50,21 @@ class Ticks extends React.Component {
 
 
 
+     fetch('/aliens/players3',{
+      method:'POST',
+     headers : { 
+       'Content-Type': 'application/json',
+       'Accept': 'application/json'
+      },
+     body:JSON.stringify({team:team})
+
+   })
+   
+   .then(res => res.json())
+   .then(bowlers=> this.setState({bowlers},() => console.log('Players fetched ',bowlers)));
+
+
+
 
 
 
@@ -71,13 +87,26 @@ class Ticks extends React.Component {
               Pick one of the two teams playing:
               <select  id="feam">
                 <option value="MI">Mumbai Indians</option>
-                <option value="KKR">Kolkata Knight Riders</option>
+                
                 <option value="RCB">Royal Challengers Bangalore</option>
-                <option value="CSK">Chennai Super Kings</option>
+                <option value="DC">Delhi Capitals</option>
+                <option value="SRH">Sunrisers Hyderabad</option>
               </select>
             </label>
             <input type="submit" value="Submit" />
           </form>
+          <div>
+<h2>Must Have Players</h2 >
+
+<ul>
+  {
+    this.state.bowlers.map(bowler=>
+    <li key={bowler.id}>{bowler.name}         {bowler.team}</li>)
+  }
+</ul>
+ 
+
+</div>
            <div>
            <h2>Safe Bets</h2>
           

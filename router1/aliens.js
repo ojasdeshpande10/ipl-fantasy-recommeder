@@ -28,7 +28,7 @@ router.get('/players',async(req,res) => {
    }
     
 })
-router.post('/players1',async(req,res) => {
+router.post('/players3',async(req,res) => {
    
     
     try{
@@ -41,12 +41,25 @@ router.post('/players1',async(req,res) => {
    }
     
 })
+router.post('/players1',async(req,res) => {
+   
+    
+    try{
+        const team=req.body.team
+       const aliens= await Alien.find({$and: [ {team}, { average :{ $gt:40 } },{average:{$lt:50}} ]}).sort({average: -1}).limit(7)
+       res.send(aliens)
+   }
+   catch(err){
+       res.send('error' +err) 
+   }
+    
+})
 router.post('/players2',async(req,res) => {
    
     
     try{
         const team=req.body.team
-       const aliens= await Alien.find({$and: [ {team}, { match1 :{ $lt:50 } },{match2: {$lt:50}}, {marquee:true} ]})
+        const aliens= await Alien.find({$and: [ {team},  {average:{$lt:40}}, {marquee:true} ]})
        res.send(aliens)
    }
    catch(err){
